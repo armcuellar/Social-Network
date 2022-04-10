@@ -4,7 +4,7 @@ const dateFormat = require('../utils/dateFormat');
 // subdocument Reaction schema
 const ReactionSchema = new Schema(
     {
-        // set custom id to avoid confusion with parent comment _id
+        // set custom id to avoid confusion with parent thought _id
         reactionId: {
             type: Schema.Types.ObjectId,
             default: () => new Types.ObjectId()
@@ -66,15 +66,10 @@ const ThoughtSchema = new Schema(
 );
 
 // reaction count
-ThoughtSchema.virtual('commentCount').get(function () {
+ThoughtSchema.virtual('thoughtCount').get(function () {
     return this.reaction.reduce((total, reaction) => total + reaction.length + 1, 0);
 });
 
-// check email
-const validateEmail = function (email) {
-    const re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    return re.test(email)
-};
 
 // create the Thought model using the ThoughtSchema
 const Thought = model('Thought', ThoughtSchema);
